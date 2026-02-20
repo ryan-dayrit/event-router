@@ -1,0 +1,37 @@
+[
+    {
+        "event_type": "customer",
+        "id": "1",
+        "meta_data": {
+            "name": "Ryan Dayrit",
+            "phone": "1111111111",
+            "email": "dayrit.ryan@gmail.com",
+            "address": { 
+                "state": "New York",
+                "country": "United States"
+            }
+        }
+    },
+    {
+        "event_type": "customer",
+        "id": "2",
+        "meta_data": {
+            "name": "Rick Dayrit",
+            "phone": "1111111111",
+            "email": "rick.dayrit@gmail.com",
+            "address": { 
+                "state": "South Carolina",
+                "country": "United States"
+            }
+        }
+    },
+        {
+        "event_type": "product",
+        "id": "1",
+        "meta_data": {
+            "brand": "nike",
+            "name": "Air Jordan",
+            "price": "100.00"
+        }
+    }
+]
