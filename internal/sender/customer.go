@@ -2,9 +2,11 @@ package sender
 
 import (
 	"fmt"
+	"sync"
 )
 
-func SendCustomerEvents(customerEventsCh <-chan map[string]interface{}) {
+func SendCustomerEvents(customerEventsCh <-chan map[string]interface{}, waitGroup *sync.WaitGroup) {
+	defer waitGroup.Done()
 	for event := range customerEventsCh {
 		fmt.Printf("[customer] id: %s \n", event["id"].(string))
 

@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"sync"
+
 	"event-router/internal/sender"
 )
 
@@ -14,19 +16,24 @@ func (h *eventsHandler) ProcessEvents(events []map[string]interface{}) error {
 	customerEventsCh := make(chan map[string]interface{})
 	productEventsCh := make(chan map[string]interface{})
 
-	go sender.SendCustomerEvents(customerEventsCh)
-	go sender.SendProductEvents(productEventsCh)
+	var waitGroup sync.WaitGroup
+	waitGroup.Add(2)
+
+	go sender.SendCustomerEvents(customerEventsCh, &waitGroup)
+	go sender.SendProductEvents(productEventsCh, &waitGroup)
 
 	for _, event := range events {
 		switch event["event_type"].(string) {
-		case "customer":
-			customerEventsCh <- event
 		case "product":
 			productEventsCh <- event
+		case "customer":
+			customerEventsCh <- event
 		}
 	}
+
 	close(customerEventsCh)
 	close(productEventsCh)
+	waitGroup.Wait()
 
 	return nil
 }
