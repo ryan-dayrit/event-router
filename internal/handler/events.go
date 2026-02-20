@@ -39,13 +39,13 @@ func (h *eventsHandler) ProcessEvents(events []map[string]interface{}) error {
 	customerEventsCh := make(chan map[string]interface{})
 	productEventsCh := make(chan map[string]interface{})
 
-	//go processCustomerEvents(customerEventsCh)
+	go processCustomerEvents(customerEventsCh)
 	go processProductEvents(productEventsCh)
 
 	for _, event := range events {
 		switch event["event_type"].(string) {
-		//case "customer":
-		//	customerEventsCh <- event
+		case "customer":
+			customerEventsCh <- event
 		case "product":
 			productEventsCh <- event
 		}
