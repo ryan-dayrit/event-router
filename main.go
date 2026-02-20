@@ -16,5 +16,8 @@ func main() {
 	}
 
 	handler := handler.NewEventsHandler()
-	handler.ProcessEvents(events)
+	eventsMap := handler.ProcessEvents(events)
+
+	fmt.Printf("# customer events processed: %d\n", len(eventsMap["customer"]))
+	fmt.Printf("# product events processed: %d\n", len(eventsMap["product"]))
 }
