@@ -2,19 +2,18 @@ package main
 
 import (
 	_ "embed"
-	"encoding/json"
+	"fmt"
 	"log"
 
 	"event-router/internal/handler"
+	json_repository "event-router/internal/repository/json"
 )
 
-//go:embed testdata/events.json
-var eventsJson []byte
-
 func main() {
-	var events []map[string]interface{}
-	if err := json.Unmarshal(eventsJson, &events); err != nil {
-		log.Fatal(err)
+	repostory := json_repository.NewRepository()
+	events, err := repostory.GetEvents("testdata/events.json")
+	if err != nil {
+		log.Panic(fmt.Errorf("failed to fetch events from json file: %s", err))
 	}
 
 	handler := handler.NewEventsHandler()
